@@ -47,37 +47,8 @@ namespace CheckeredGameOfLife
         public static readonly Tile Jail = new("Jail", (4, 0));
         public static readonly SkipNextTurn Prison = new("Prison", (6, 0));
 
-        public static readonly DefaultDict<string, Tile> TilesByName = new()
-        {
-            { Perseverence.Name, Perseverence },
-            { Truth.Name,        Truth        },
-            { Politics.Name,     Politics     },
-            { Intemperance.Name, Intemperance },
-            { Crime.Name,        Crime        },
-            { Happiness.Name,    Happiness    },
-            { Idleness.Name,     Idleness     },
-            { Success.Name,      Success      },
-            { Congress.Name,     Congress     },
-            { Honor.Name,        Honor        },
-            { Cupid.Name,        Cupid        },
-            { Speculation.Name,  Speculation  },
-            { Honesty.Name,      Honesty      },
-            { Industry.Name,     Industry     },
-            { Bravery.Name,      Bravery      },
-            { Ruin.Name,         Ruin         },
-            { Poverty.Name,      Poverty      },
-            { Ambition.Name,     Ambition     },
-            { College.Name,      College      },
-            { Suicide.Name,      Suicide      },
-            { School.Name,       School       },
-            { Influence.Name,    Influence    },
-            { Fame.Name,         Fame         },
-            { FatOffice.Name,    FatOffice    },
-            { Infancy.Name,      Infancy      },
-            { Disgrace.Name,     Disgrace     },
-            { Jail.Name,         Jail         },
-            { Prison.Name,       Prison       }
-        };
+        public static readonly HashSet<Tile> Tiles = new();
+        public static readonly Dictionary<(int x, int y), Tile> TilesByPos = new();
         #endregion TileDefs
         public string Name { get; private set; } = null;
         public Uri IconUri { get; private set; } = null;
