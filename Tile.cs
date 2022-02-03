@@ -20,6 +20,7 @@ namespace CheckeredGameOfLife
             if (Player != null) Player.GoTo(Jail);
             Player = p;
         }
+        public virtual void PostInit() { }
     }
     public class GainPoints : Tile
     {
@@ -32,6 +33,24 @@ namespace CheckeredGameOfLife
         {
             base.ReceivePlayer(p);
             p.Points += Points;
+        }
+    }
+    public class GoTo : Tile
+    {
+        public Tile TargetTile { get; private set; }
+        private string _tileName;
+        public GoTo(string tileName, string unresolvedUri) : base(unresolvedUri)
+        {
+            _tileName = tileName;
+        }
+        public override void ReceivePlayer(Player p)
+        {
+            // no call of base because a player can never land here
+            p.GoTo(TargetTile);
+        }
+        public override void PostInit()
+        {
+            base.PostInit();
         }
     }
 }
