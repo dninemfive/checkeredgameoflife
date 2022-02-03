@@ -8,10 +8,12 @@ namespace CheckeredGameOfLife
     {
         public static Tile[,] Board { get; private set; }
         private readonly static Dictionary<string, Tile> tilesByName = new();
+        public static readonly Random Random = new();
         public static Tile TileByName(string name)
         {
             if (tilesByName.ContainsKey(name)) return tilesByName[name];
             return null;
         }
+        public static int Roll() => Random.Next(1, 7);
     }
 }
