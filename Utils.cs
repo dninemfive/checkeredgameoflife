@@ -48,7 +48,7 @@ namespace CheckeredGameOfLife
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            Grid.SetRow(toAdd, 8 - t.Pos.y);
+            Grid.SetRow(toAdd, 7 - t.Pos.y);
             Grid.SetColumn(toAdd, t.Pos.x);
             grid.Children.Add(toAdd);
         }
