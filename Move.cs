@@ -7,16 +7,7 @@ using System.Threading.Tasks;
 namespace CheckeredGameOfLife
 {
     public class Move
-    {
-        public static Dictionary<int, List<Move>> MovesByRoll = new()
-        {
-            { 1, new() { Up, Down } },
-            { 2, new() { Left, Right } },
-            { 3, new() { UpRight, UpLeft, DownRight, DownLeft } },
-            { 4, new() { Up, Up * 2, Down, Down * 2 } },
-            { 5, new() { Left, Left * 2, Right, Right * 2 } },
-            { 6, new() { UpRight, UpRight * 2, UpLeft, UpLeft * 2, DownRight, DownRight * 2, DownLeft, DownLeft * 2 } },
-        };
+    {        
         public int xOffset, yOffset;
         public Move(int x, int y)
         {
@@ -36,5 +27,14 @@ namespace CheckeredGameOfLife
         public static readonly Move UpLeft = Up + Left;
         public static readonly Move DownRight = Down + Right;
         public static readonly Move DownLeft = Down + Left;
+        public static Dictionary<int, List<Move>> MovesByRoll = new()
+        {
+            { 1, new() { Up, Down } },
+            { 2, new() { Left, Right } },
+            { 3, new() { UpRight, UpLeft, DownRight, DownLeft } },
+            { 4, new() { Up, Up * 2, Down, Down * 2 } },
+            { 5, new() { Left, Left * 2, Right, Right * 2 } },
+            { 6, new() { UpRight, UpRight * 2, UpLeft, UpLeft * 2, DownRight, DownRight * 2, DownLeft, DownLeft * 2 } },
+        };
     }
 }

@@ -68,8 +68,9 @@ namespace CheckeredGameOfLife
         public static void SetGridCoords(this UIElement el, (int x, int y) pos) => SetGridCoords(el, pos.x, pos.y);
         public static void HighlightCoords(this Grid grid, int x, int y)
         {
-
+            grid.Add(UIElements.Square(Constants.HighlightColor), (x, y));
         }
+        public static void HighlightCoords(this Grid grid, (int x, int y) pos) => HighlightCoords(grid, pos.x, pos.y);
     }
 
     public static class UriExtensions
@@ -89,14 +90,16 @@ namespace CheckeredGameOfLife
         public const byte PlayerOpacity = 200;
         public const int GridSize = 8;
         public const int DieSize = 6;
+        public static readonly Color HighlightColor = Colors.Yellow.SetOpacity(120);
     }
     public static class MiscExtensions
     {
-        public static Color PlayerColor(this Color c)
+        public static Color SetOpacity(this Color c, byte opacity)
         {
-            c.A = Constants.PlayerOpacity;
+            c.A = opacity;
             return c;
         }
+        public static Color PlayerColor(this Color c) => SetOpacity(c, Constants.PlayerOpacity);
         public static bool IsInRange(this int n, int min, int max) => n >= min && n < max;
         public static bool IsInbounds(this int n) => n.IsInRange(0, Constants.GridSize);
         public static bool IsInbounds(this (int x, int y) pos) => pos.x.IsInbounds() && pos.y.IsInbounds();
@@ -116,6 +119,10 @@ namespace CheckeredGameOfLife
             Text = text
         };
         public static Ellipse Circle(Color color) => new()
+        {
+            Fill = new SolidColorBrush(color)
+        };
+        public static Rectangle Square(Color color) => new()
         {
             Fill = new SolidColorBrush(color)
         };

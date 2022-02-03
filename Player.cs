@@ -37,11 +37,11 @@ namespace CheckeredGameOfLife
         {
             // allow player to control roll
             int roll = Game.Roll();
+            Game.DebugText.Text = roll + "";
             AvailableMoves.Clear();
             AvailableMoves.UnionWith(Move.MovesByRoll[roll].Where(x => x.OffsetPosIsInbounds(this)));
+            foreach (Move m in AvailableMoves) Game.Grid.HighlightCoords(m.OffsetPos(this));
             // wait for player to select move...
-            Move taken = null;
-            GoTo(taken.OffsetPos(this));
             // if landed on speculation, allow player to roll again
             // if landed on tile which moves you, briefly sit there to show how you moved before moving you to the correct tile
         }

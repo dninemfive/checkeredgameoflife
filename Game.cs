@@ -13,7 +13,8 @@ namespace CheckeredGameOfLife
         public static int Roll() => Random.Next(1, Constants.DieSize);
         public static Board Board { get; private set; }
         public static Grid Grid { get; private set; }
-        public Game(Grid g)
+        public static TextBlock DebugText { get; private set; }
+        public Game(Grid g, TextBlock debugText)
         {
             Grid = g;
             // Selects all Tile fields on the Tile class
@@ -25,6 +26,7 @@ namespace CheckeredGameOfLife
                 Tile.TilesByPos[t.Pos] = t;
             }
             Board = new();
+            DebugText = debugText;
         }
     }
 }
