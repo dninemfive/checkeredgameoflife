@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace CheckeredGameOfLife
 {
@@ -43,17 +45,41 @@ namespace CheckeredGameOfLife
     {
         public static void Add(this Grid grid, Tile t)
         {
-            Image toAdd = new()
+            Image image = new()
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 Source = t.IconUri.BitmapImage()
             };
-            Grid.SetRow(toAdd, 7 - t.Pos.y);
-            Grid.SetColumn(toAdd, t.Pos.x);
-            grid.Children.Add(toAdd);
-        }        
+            image.SetGridCoords(t.Pos);
+            grid.Children.Add(image);
+            TextBox textBox = new()
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Text = t.Name
+            };
+            textBox.SetGridCoords(t.Pos);
+            grid.Children.Add(textBox);
+        }
+        public static Ellipse Add(this Grid grid, Player p)
+        {
+            Ellipse circle = new()
+            {
+                Fill = new SolidColorBrush(p.Color)
+            };
+            circle.SetGridCoords(p.Pos);
+            grid.Children.Add(circle);
+            return circle;
+        }
+        public static void SetGridCoords(this UIElement el, int x, int y)
+        {
+            Grid.SetColumn(el, x);
+            Grid.SetRow(el, 7 - y);
+        }
+        public static void SetGridCoords(this UIElement el, (int x, int y) pos) => SetGridCoords(el, pos.x, pos.y);
     }
+    
     public static class UriExtensions
     {
         public static BitmapImage BitmapImage(this Uri uri)
@@ -64,5 +90,9 @@ namespace CheckeredGameOfLife
             ret.EndInit();
             return ret;
         }
+    }
+    public class Constants
+    {
+        public static string WorkingDirectory => Environment.CurrentDirectory;
     }
 }

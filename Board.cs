@@ -20,7 +20,7 @@ namespace CheckeredGameOfLife
                     } 
                     else
                     {
-                        _board[i, j] = new Tile($"Red at ({i}, {j})", (i, j));
+                        _board[i, j] = new Tile($"({i}, {j})", (i, j), "Red");
                         Tile.TilesByPos[(i, j)] = _board[i, j];
                     }
                 }

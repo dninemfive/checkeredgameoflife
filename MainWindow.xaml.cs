@@ -27,7 +27,7 @@ namespace CheckeredGameOfLife
                 {
                     GameBoard.Add(Game.Board[i, j]);
                 }
-            
+            Player Player1 = new Player(GameBoard, Colors.Red);
         }
     }
 }
