@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace CheckeredGameOfLife
 {
@@ -37,7 +38,7 @@ namespace CheckeredGameOfLife
             // allow player to control roll
             int roll = Game.Roll();
             AvailableMoves.Clear();
-            AvailableMoves.UnionWith(Move.MovesByRoll[roll]);
+            AvailableMoves.UnionWith(Move.MovesByRoll[roll].Where(x => x.OffsetPosIsInbounds(this)));
             // wait for player to select move...
             Move taken = null;
             GoTo(taken.OffsetPos(this));

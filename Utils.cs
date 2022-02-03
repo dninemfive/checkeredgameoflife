@@ -43,41 +43,21 @@ namespace CheckeredGameOfLife
     }
     public static class GridExtensions
     {
+        public static void Add(this Grid grid, UIElement el, (int x, int y) pos)
+        {
+            el.SetGridCoords(pos);
+            grid.Children.Add(el);
+        }
         public static void Add(this Grid grid, Tile t)
         {
-            Image image = new()
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Source = t.IconUri.BitmapImage()
-            };
-            image.SetGridCoords(t.Pos);
-            grid.Children.Add(image);
-            TextBlock textBlock = new()
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Text = t.Name                
-            };
-            textBlock.SetGridCoords(t.Pos);
-            grid.Children.Add(textBlock);
+            grid.Add(UIElements.Image(t.IconUri), t.Pos);
+            grid.Add(UIElements.TextBlock(t.Name), t.Pos);
         }
         public static Ellipse Add(this Grid grid, Player p)
         {
-            Ellipse circle = new()
-            {
-                Fill = new SolidColorBrush(p.Color)
-            };
-            circle.SetGridCoords(p.Pos);
-            grid.Children.Add(circle);
-            TextBlock textBlock = new()
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Text = p.Name
-            };
-            textBlock.SetGridCoords(p.Pos);
-            grid.Children.Add(textBlock);
+            Ellipse circle = UIElements.Circle(p.Color.PlayerColor());
+            grid.Add(circle, p.Pos);
+            grid.Add(UIElements.TextBlock(p.Name), p.Pos);
             return circle;
         }
         public static void SetGridCoords(this UIElement el, int x, int y)
@@ -86,6 +66,10 @@ namespace CheckeredGameOfLife
             Grid.SetRow(el, (Constants.GridSize - 1) - y);
         }
         public static void SetGridCoords(this UIElement el, (int x, int y) pos) => SetGridCoords(el, pos.x, pos.y);
+        public static void HighlightCoords(this Grid grid, int x, int y)
+        {
+
+        }
     }
 
     public static class UriExtensions
@@ -117,4 +101,23 @@ namespace CheckeredGameOfLife
         public static bool IsInbounds(this int n) => n.IsInRange(0, Constants.GridSize);
         public static bool IsInbounds(this (int x, int y) pos) => pos.x.IsInbounds() && pos.y.IsInbounds();
     }
+    public static class UIElements
+    {
+        public static Image Image(Uri uri) => new()
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Source = uri.BitmapImage()
+        };
+        public static TextBlock TextBlock(string text) => new()
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Text = text
+        };
+        public static Ellipse Circle(Color color) => new()
+        {
+            Fill = new SolidColorBrush(color)
+        };
+}
 }
