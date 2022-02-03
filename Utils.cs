@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace CheckeredGameOfLife
 {
@@ -42,15 +43,26 @@ namespace CheckeredGameOfLife
     {
         public static void Add(this Grid grid, Tile t)
         {
-            TextBlock toAdd = new()
+            Image toAdd = new()
             {
-                Text = t.Name,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                Source = t.IconUri.BitmapImage()
             };
             Grid.SetRow(toAdd, 7 - t.Pos.y);
             Grid.SetColumn(toAdd, t.Pos.x);
             grid.Children.Add(toAdd);
+        }        
+    }
+    public static class UriExtensions
+    {
+        public static BitmapImage BitmapImage(this Uri uri)
+        {
+            BitmapImage ret = new();
+            ret.BeginInit();
+            ret.UriSource = uri;
+            ret.EndInit();
+            return ret;
         }
     }
 }
