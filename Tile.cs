@@ -57,7 +57,7 @@ namespace CheckeredGameOfLife
         public Tile(string name, (int x, int y) pos) 
         {
             Name = name;
-            IconUri = new Uri("Red.png", UriKind.Relative);
+            IconUri = new Uri(@"C:\Users\dninemfive\Documents\workspaces\games\CheckeredGameOfLife\Red.png", UriKind.Absolute);
             Pos = pos;
         }
         public virtual void ReceivePlayer(Player p)

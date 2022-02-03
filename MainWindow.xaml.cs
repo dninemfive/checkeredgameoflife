@@ -23,12 +23,11 @@ namespace CheckeredGameOfLife
         public MainWindow()
         {
             InitializeComponent();
-            DebugString.Text = Environment.CurrentDirectory;
             for(int i = 0; i < 8; i++) for(int j = 0; j < 8; j++)
                 {
                     GameBoard.Add(Game.Board[i, j]);
                 }
-            DebugString.Text = Game.Board[0, 0];
+            
         }
     }
 }

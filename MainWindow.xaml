@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock Name="DebugString">Debug String</TextBlock>
-        <Grid Name="GameBoard" Height="400" Width="400" ShowGridLines="True">
+        <Grid Name="GameBoard" Height="400" Width="400">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
