@@ -9,37 +9,37 @@ namespace CheckeredGameOfLife
         #region TileDefs
         public static readonly GainPoints Wealth = new("Wealth", 10);
         public static readonly Tile Matrimony = new("Matrimony");
-        public static readonly GoTo Gambling = new("Gambling", "Ruin");
+        public static readonly GoTo Gambling = new("Gambling", Ruin);
         public static readonly GainPoints HappyOldAge = new("Happy Old Age", 5);
-        public static readonly GoTo Perseverence = new("Perseverance", "Success");
+        public static readonly GoTo Perseverence = new("Perseverance", Success);
         public static readonly Tile Truth = new("Truth");
-        public static readonly GoTo Politics = new("Politics", "Congress");
-        public static readonly GoTo Intemperance = new("Intemperance", "Poverty");
-        public static readonly GoTo Crime = new("Crime", "Prison");
+        public static readonly GoTo Politics = new("Politics", Congress);
+        public static readonly GoTo Intemperance = new("Intemperance", Intemperance);
+        public static readonly GoTo Crime = new("Crime", Prison);
         public static readonly GainPoints Happiness = new("Happiness", 5);
-        public static readonly GoTo Idleness = new("Idleness", "Disgrace");
+        public static readonly GoTo Idleness = new("Idleness", Disgrace);
         public static readonly GainPoints Success = new("Success", 5);
         public static readonly GainPoints Congress = new("Congress", 5);
         public static readonly GainPoints Honor = new("Honor");
-        public static readonly GoTo Cupid = new("Cupid", "Matrimony");
+        public static readonly GoTo Cupid = new("Cupid", Matrimony);
         public static readonly RandomlyMovePlayer Speculation = new(
             "Speculation",
             new HashSet<(int[], string)>()
             {
-                (new int[] { 3, 6 }, "Wealth")
+                (new int[] { 3, 6 }, Wealth)
             },
-            "Ruin"
+            Ruin
         );
-        public static readonly GoTo Honesty = new("Honesty", "Happiness");
-        public static readonly GoTo Industry = new("Industry", "Wealth");
-        public static readonly GoTo Bravery = new("Bravery", "Honor");
+        public static readonly GoTo Honesty = new("Honesty", Happiness);
+        public static readonly GoTo Industry = new("Industry", Wealth);
+        public static readonly GoTo Bravery = new("Bravery", Honor);
         public static readonly Tile Ruin = new("Ruin");
         public static readonly Tile Poverty = new("Poverty");
-        public static readonly GoTo Ambition = new("Ambition", "Fame");
+        public static readonly GoTo Ambition = new("Ambition", Fame);
         public static readonly GainPoints College = new("College");
         public static readonly KillPlayer Suicide = new("Suicide");
-        public static readonly GoTo School = new("School", "College");
-        public static readonly GoTo Influence = new("Influence", "Fat Office");
+        public static readonly GoTo School = new("School", College);
+        public static readonly GoTo Influence = new("Influence", FatOffice);
         public static readonly Tile Fame = new("Fame");
         public static readonly GainPoints FatOffice = new("Fat Office");
         public static readonly Tile Infance = new("Infancy");
@@ -61,7 +61,6 @@ namespace CheckeredGameOfLife
             if (Player != null) Player.GoTo(Jail);
             Player = p;
         }
-        public virtual void PostInit() { }
     }
     public class GainPoints : Tile
     {
@@ -79,20 +78,14 @@ namespace CheckeredGameOfLife
     public class GoTo : Tile
     {
         public Tile TargetTile { get; private set; }
-        private readonly string _targetTileName;
-        public GoTo(string name, string targetTileName) : base(name)
+        public GoTo(string name, Tile targetTile) : base(name)
         {
-            _targetTileName = targetTileName;
+            TargetTile = targetTile;
         }
         public override void ReceivePlayer(Player p)
         {
             // no call of base because a player can never stay here
             p.GoTo(TargetTile);
-        }
-        public override void PostInit()
-        {
-            base.PostInit();
-            TargetTile = Game.TilesByName[_targetTileName];
         }
     }
     public class SkipNextTurn : Tile
@@ -115,24 +108,17 @@ namespace CheckeredGameOfLife
     }
     public class RandomlyMovePlayer : Tile
     {
-        private HashSet<(int[], string)> _targetTilesByRoll;
         public DefaultDict<int, Tile> TargetTilesByRoll;
-        private string _defaultTile;
-        public RandomlyMovePlayer(string name, HashSet<(int[], string)> targetTilesByRoll, string defaultTile) : base(name)
+        public RandomlyMovePlayer(string name, HashSet<(int[], Tile)> targetTilesByRoll, Tile defaultTile) : base(name)
         {
-            _targetTilesByRoll = targetTilesByRoll;
+            TargetTilesByRoll = new(defaultTile);
+            foreach ((int[] ns, Tile t) in targetTilesByRoll)
+                foreach (int n in ns) TargetTilesByRoll[n] = t;
         }
         public override void ReceivePlayer(Player p)
         {
             base.ReceivePlayer(p);
             p.GoTo(TargetTilesByRoll[Game.Roll()]);
-        }
-        public override void PostInit()
-        {
-            base.PostInit();
-            TargetTilesByRoll = new(Game.TilesByName[_defaultTile]);
-            foreach ((int[] ns, string name) in _targetTilesByRoll) 
-                foreach(int n in ns) TargetTilesByRoll[n] = Game.TilesByName[name];
         }
     }
 }
