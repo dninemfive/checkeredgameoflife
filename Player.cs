@@ -22,15 +22,14 @@ namespace CheckeredGameOfLife
             }
         }
         public int Points;
-        public delegate void TurnAction();
-        public HashSet<TurnAction> AvailableActions;
+        public HashSet<(int xOffset, int yOffset)> AvailableActions;
         public Ellipse Marker { get; private set; }
         public Color Color { get; private set; }
-        public Player(Grid grid, Color color)
+        public Player(Color color)
         {
             Tile = Tile.Infancy;
             Color = color;
-            Marker = grid.Add(this);
+            Marker = Game.Grid.Add(this);
         }
         public void SkipNextTurn() => AvailableActions.Clear();
         public void GoTo(Tile t)

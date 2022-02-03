@@ -11,8 +11,9 @@ namespace CheckeredGameOfLife
         private Tile[,] _board { get; set; }
         public Board()
         {
-            _board = new Tile[8, 8];
-            for(int i = 0; i < 8; i++) for(int j = 0; j < 8; j++)
+            int n = Constants.GridSize;
+            _board = new Tile[n, n];
+            for(int i = 0; i < n; i++) for(int j = 0; j < n; j++)
                 {
                     if(i % 2 == j % 2)
                     {
@@ -29,8 +30,8 @@ namespace CheckeredGameOfLife
         {
             get
             {
-                if (x < 0 || x >= _board.GetLength(0)) throw new ArgumentOutOfRangeException(nameof(x));
-                if (y < 0 || y >= _board.GetLength(1)) throw new ArgumentOutOfRangeException(nameof(y));
+                if (!x.IsInbounds()) throw new ArgumentOutOfRangeException(nameof(x));
+                if (!y.IsInbounds()) throw new ArgumentOutOfRangeException(nameof(y));
                 return _board[x, y];
             }
         }

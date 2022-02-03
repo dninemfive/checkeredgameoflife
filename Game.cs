@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace CheckeredGameOfLife
 {
-    public static class Game
+    public class Game
     {
         public static readonly Random Random = new();
-        public static int Roll() => Random.Next(1, 7);
+        public static int Roll() => Random.Next(1, Constants.DieSize);
         public static Board Board { get; private set; }
-        static Game()
+        public static Grid Grid { get; private set; }
+        public Game(Grid g)
         {
+            Grid = g;
             // Selects all Tile fields on the Tile class
             foreach(Tile t in typeof(Tile).GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(x => x.FieldType == typeof(Tile) || x.FieldType.IsSubclassOf(typeof(Tile)))

@@ -23,11 +23,12 @@ namespace CheckeredGameOfLife
         public MainWindow()
         {
             InitializeComponent();
-            for(int i = 0; i < 8; i++) for(int j = 0; j < 8; j++)
+            _ = new Game(GameBoard);
+            for(int i = 0; i < Constants.GridSize; i++) for(int j = 0; j < Constants.GridSize; j++)
                 {
                     GameBoard.Add(Game.Board[i, j]);
                 }
-            Player Player1 = new Player(GameBoard, Colors.Red.PlayerColor());
+            _ = new Player(Colors.Red.PlayerColor());
         }
     }
 }

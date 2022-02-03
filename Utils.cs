@@ -70,12 +70,20 @@ namespace CheckeredGameOfLife
             };
             circle.SetGridCoords(p.Pos);
             grid.Children.Add(circle);
+            TextBlock textBlock = new()
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Text = p.Name
+            };
+            textBlock.SetGridCoords(p.Pos);
+            grid.Children.Add(textBlock);
             return circle;
         }
         public static void SetGridCoords(this UIElement el, int x, int y)
         {
             Grid.SetColumn(el, x);
-            Grid.SetRow(el, 7 - y);
+            Grid.SetRow(el, (Constants.GridSize - 1) - y);
         }
         public static void SetGridCoords(this UIElement el, (int x, int y) pos) => SetGridCoords(el, pos.x, pos.y);
     }
@@ -95,13 +103,17 @@ namespace CheckeredGameOfLife
     {
         public static string WorkingDirectory => Environment.CurrentDirectory;
         public const byte PlayerOpacity = 200;
+        public const int GridSize = 8;
+        public const int DieSize = 6;
     }
-    public static class ColorExtensions 
+    public static class MiscExtensions
     {
         public static Color PlayerColor(this Color c)
         {
             c.A = Constants.PlayerOpacity;
             return c;
         }
+        public static bool IsInRange(this int n, int min, int max) => n >= min && n < max;
+        public static bool IsInbounds(this int n) => n.IsInRange(0, Constants.GridSize);
     }
 }
