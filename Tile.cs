@@ -106,7 +106,7 @@ namespace CheckeredGameOfLife
         public override void ReceivePlayer(Player p)
         {
             base.ReceivePlayer(p);
-            p.SkipNextTurn();
+            p.CanTakeNextTurn = false;
         }
     }
     public class Tile_Death : Tile

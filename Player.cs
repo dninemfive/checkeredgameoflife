@@ -22,7 +22,8 @@ namespace CheckeredGameOfLife
             }
         }
         public int Points;
-        public HashSet<(int xOffset, int yOffset)> AvailableActions;
+        public bool CanTakeNextTurn = true;
+        public readonly HashSet<Move> AvailableMoves = new();
         public Ellipse Marker { get; private set; }
         public Color Color { get; private set; }
         public Player(Color color)
@@ -31,13 +32,25 @@ namespace CheckeredGameOfLife
             Color = color;
             Marker = Game.Grid.Add(this);
         }
-        public void SkipNextTurn() => AvailableActions.Clear();
+        public void TakeTurn()
+        {
+            // allow player to control roll
+            int roll = Game.Roll();
+            AvailableMoves.Clear();
+            AvailableMoves.UnionWith(Move.MovesByRoll[roll]);
+            // wait for player to select move...
+            Move taken = null;
+            GoTo(taken.OffsetPos(this));
+            // if landed on speculation, allow player to roll again
+            // if landed on tile which moves you, briefly sit there to show how you moved before moving you to the correct tile
+        }
         public void GoTo(Tile t)
         {
             LeaveCurrentTile();
             t.ReceivePlayer(this);
         }
         public void GoTo(int x, int y) => GoTo(Game.Board[x, y]);
+        public void GoTo((int x, int y) pos) => GoTo(pos.x, pos.y);
         private void LeaveCurrentTile()
         {
             Tile.LosePlayer();            
