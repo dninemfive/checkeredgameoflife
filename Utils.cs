@@ -53,14 +53,14 @@ namespace CheckeredGameOfLife
             };
             image.SetGridCoords(t.Pos);
             grid.Children.Add(image);
-            TextBox textBox = new()
+            TextBlock textBlock = new()
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                Text = t.Name
+                Text = t.Name                
             };
-            textBox.SetGridCoords(t.Pos);
-            grid.Children.Add(textBox);
+            textBlock.SetGridCoords(t.Pos);
+            grid.Children.Add(textBlock);
         }
         public static Ellipse Add(this Grid grid, Player p)
         {
@@ -79,7 +79,7 @@ namespace CheckeredGameOfLife
         }
         public static void SetGridCoords(this UIElement el, (int x, int y) pos) => SetGridCoords(el, pos.x, pos.y);
     }
-    
+
     public static class UriExtensions
     {
         public static BitmapImage BitmapImage(this Uri uri)
@@ -91,8 +91,17 @@ namespace CheckeredGameOfLife
             return ret;
         }
     }
-    public class Constants
+    public static class Constants
     {
         public static string WorkingDirectory => Environment.CurrentDirectory;
+        public const byte PlayerOpacity = 200;
+    }
+    public static class ColorExtensions 
+    {
+        public static Color PlayerColor(this Color c)
+        {
+            c.A = Constants.PlayerOpacity;
+            return c;
+        }
     }
 }
