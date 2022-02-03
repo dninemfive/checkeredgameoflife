@@ -6,7 +6,8 @@ namespace CheckeredGameOfLife
 {
     public class Player
     {
-        public string name;
+        public string Name;
+        public Tile Tile { get; private set; }
         private bool _dead = false;
         public bool Dead
         {
@@ -20,6 +21,15 @@ namespace CheckeredGameOfLife
         public delegate void TurnAction();
         public HashSet<TurnAction> AvailableActions;
         public void SkipNextTurn() => AvailableActions.Clear();
-        public void GoTo(Tile t) { }
+        public void GoTo(Tile t)
+        {
+            LeaveCurrentTile();
+            t.ReceivePlayer(this);
+        }
+        public void GoTo(int x, int y) => GoTo(Game.Board[x, y]);
+        private void LeaveCurrentTile()
+        {
+            Tile.LosePlayer();            
+        }
     }
 }

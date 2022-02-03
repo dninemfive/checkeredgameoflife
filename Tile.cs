@@ -45,7 +45,7 @@ namespace CheckeredGameOfLife
         public static readonly Tile Infancy = new("Infancy", (0, 0));
         public static readonly Tile Disgrace = new("Disgrace", (2, 0));
         public static readonly Tile Jail = new("Jail", (4, 0));
-        public static readonly SkipNextTurn Prison = new("Prison", (6, 0));
+        public static readonly Tile_SkipNextTurn Prison = new("Prison", (6, 0));
 
         public static readonly HashSet<Tile> Tiles = new();
         public static readonly Dictionary<(int x, int y), Tile> TilesByPos = new();
@@ -64,6 +64,10 @@ namespace CheckeredGameOfLife
         {
             if (Player != null) Player.GoTo(Jail);
             Player = p;
+        }
+        public void LosePlayer()
+        {
+            Player = null;
         }
     }
     public class Tile_GainPoints : Tile
@@ -92,9 +96,9 @@ namespace CheckeredGameOfLife
             p.GoTo(TargetTile);
         }
     }
-    public class SkipNextTurn : Tile
+    public class Tile_SkipNextTurn : Tile
     {
-        public SkipNextTurn(string name, (int x, int y) pos) : base(name, pos) { }
+        public Tile_SkipNextTurn(string name, (int x, int y) pos) : base(name, pos) { }
         public override void ReceivePlayer(Player p)
         {
             base.ReceivePlayer(p);

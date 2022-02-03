@@ -10,6 +10,7 @@ namespace CheckeredGameOfLife
     {
         public static readonly Random Random = new();
         public static int Roll() => Random.Next(1, 7);
+        public static Board Board { get; private set; }
         static Game()
         {
             // Selects all Tile fields on the Tile class
@@ -20,6 +21,7 @@ namespace CheckeredGameOfLife
                 Tile.Tiles.Add(t);
                 Tile.TilesByPos[t.Pos] = t;
             }
+            Board = new();
         }
     }
 }

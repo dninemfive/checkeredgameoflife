@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace CheckeredGameOfLife
 {
@@ -35,5 +37,20 @@ namespace CheckeredGameOfLife
         public bool Remove(KeyValuePair<TKey, TValue> item) => InternalDict.Remove(item.Key);
         public bool TryGetValue(TKey key, out TValue value) => InternalDict.TryGetValue(key, out value);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+    public static class GridExtensions
+    {
+        public static void Add(this Grid grid, Tile t)
+        {
+            TextBlock toAdd = new()
+            {
+                Text = t.Name,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            Grid.SetRow(toAdd, 8 - t.Pos.y);
+            Grid.SetColumn(toAdd, t.Pos.x);
+            grid.Children.Add(toAdd);
+        }
     }
 }

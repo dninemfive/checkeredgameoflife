@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CheckeredGameOfLife
 {
-    class Board
+    public class Board
     {
         private Tile[,] _board { get; set; }
         public Board()
@@ -16,13 +16,24 @@ namespace CheckeredGameOfLife
                 {
                     if(i % 2 == j % 2)
                     {
-                        
+                        _board[i, j] = Tile.TilesByPos[(i, j)];
                     } 
                     else
                     {
                         _board[i, j] = new Tile($"Red at ({i}, {j})", (i, j));
+                        Tile.TilesByPos[(i, j)] = _board[i, j];
                     }
                 }
         }
+        public Tile this[int x, int y]
+        {
+            get
+            {
+                if (x < 0 || x >= _board.GetLength(0)) throw new ArgumentOutOfRangeException(nameof(x));
+                if (y < 0 || y >= _board.GetLength(1)) throw new ArgumentOutOfRangeException(nameof(y));
+                return _board[x, y];
+            }
+        }
+        public Tile this[(int x, int y) pos] => this[pos.x, pos.y];
     }
 }
