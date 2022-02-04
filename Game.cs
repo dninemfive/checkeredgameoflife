@@ -31,8 +31,9 @@ namespace CheckeredGameOfLife
             DebugText = debugText;
             for(int i = 0; i < 4; i++)
             {
-
+                Players.Add(new Player_CPU_Random());
             }
+            Players.CurrentPlayer.TakeTurn();
         }
         public static bool CheckForGameEnd()
         {

@@ -9,7 +9,9 @@ namespace CheckeredGameOfLife
 {
     public class Player_CPU_Random : Player
     {
-        public Player_CPU_Random(string n, Color c) : base(n, c) { }
+        public static readonly CpuColorGenerator ColorGenerator = new();
+        public static readonly CpuNameGenerator NameGenerator = new();
+        public Player_CPU_Random() : base(NameGenerator.Random, ColorGenerator.Random) { }
         public override int GetPlayerRoll() => Game.Roll();
         public override Move GetPlayerMove() => AvailableMoves.Random();
     }

@@ -12,7 +12,7 @@ namespace CheckeredGameOfLife
         internal abstract List<T> AllItems { get; }
         internal readonly List<T> TakenItems = new();
         internal List<T> NonTakenItems => AllItems.Where(x => !TakenItems.Contains(x)).ToList();
-        public T RandomNonTakenItem
+        public T Random
         {
             get
             {

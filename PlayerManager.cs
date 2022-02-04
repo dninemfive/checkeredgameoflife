@@ -19,6 +19,7 @@ namespace CheckeredGameOfLife
             private set => _currentPlayerInd = (value % _players.Count);
         }
         public Player CurrentPlayer => _players[CurrentPlayerInd];
-        public Player GetNextPlayer() => _players[++CurrentPlayerInd];        
+        public Player GetNextPlayer() => _players[++CurrentPlayerInd];
+        public void Add(Player p) => _players.Add(p);
     }
 }
