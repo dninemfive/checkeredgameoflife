@@ -35,6 +35,12 @@ namespace CheckeredGameOfLife
         }
         public void TakeTurn()
         {
+            if (Dead) return;
+            if(!CanTakeNextTurn)
+            {
+                CanTakeNextTurn = true;
+                return;
+            }
             // allow player to control roll
             int roll = GetPlayerRoll();
             Game.DebugText.Text = roll + "";
@@ -44,8 +50,9 @@ namespace CheckeredGameOfLife
             // wait for player to select move...
             GoTo(GetPlayerMove().OffsetPos(this));
             // if landed on speculation, allow player to roll again
-                // handled by Speculation type
+            // handled by Speculation type
             // if landed on tile which moves you, briefly sit there to show how you moved before moving you to the correct tile
+            Game.Players.GetNextPlayer().TakeTurn();
         }
         public abstract int GetPlayerRoll();
         public abstract Move GetPlayerMove();

@@ -14,17 +14,8 @@ namespace CheckeredGameOfLife
         public static Board Board { get; private set; }
         public static Grid Grid { get; private set; }
         public static TextBlock DebugText { get; private set; }
-        public static readonly List<Player> Players = new();
-        public int CurrentPlayerIndex { get; private set; } = 0;
-        public Player CurrentPlayer => Players[CurrentPlayerIndex];
-        public int NextPlayerIndex
-        {
-            get
-            {
-                CurrentPlayerIndex++;
-                CurrentPlayerIndex %= Players.Count;
-            }
-        }
+        public static PlayerManager Players { get; private set; }
+        public static bool Over { get; private set; } = false;
         public Game(Grid g, TextBlock debugText)
         {
             Grid = g;
