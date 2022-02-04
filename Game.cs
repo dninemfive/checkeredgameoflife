@@ -14,7 +14,7 @@ namespace CheckeredGameOfLife
         public static Board Board { get; private set; }
         public static Grid Grid { get; private set; }
         public static TextBlock DebugText { get; private set; }
-        public static PlayerManager Players { get; private set; }
+        public static PlayerManager Players { get; private set; } = new();
         public static bool Over { get; private set; } = false;
         public Game(Grid g, TextBlock debugText)
         {
@@ -29,7 +29,11 @@ namespace CheckeredGameOfLife
             }
             Board = new();
             DebugText = debugText;
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < Constants.GridSize; i++) for (int j = 0; j < Constants.GridSize; j++)
+                {
+                    g.Add(Game.Board[i, j]);
+                }
+            for (int i = 0; i < 4; i++)
             {
                 Players.Add(new Player_CPU_Random());
             }

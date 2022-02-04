@@ -23,13 +23,7 @@ namespace CheckeredGameOfLife
         public MainWindow()
         {
             InitializeComponent();
-            _ = new Game(GameBoard, DebugText);
-            for(int i = 0; i < Constants.GridSize; i++) for(int j = 0; j < Constants.GridSize; j++)
-                {
-                    GameBoard.Add(Game.Board[i, j]);
-                }
-            Player_CPU_Random player = new(Colors.Red);
-            player.TakeTurn();
+            _ = new Game(GameBoard, DebugText);            
         }
     }
 }
