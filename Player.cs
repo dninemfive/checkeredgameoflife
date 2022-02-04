@@ -29,35 +29,39 @@ namespace CheckeredGameOfLife
         public Color Color { get; private set; }
         public Player(Color color)
         {
+            // todo: set tile to null; have handling for this
+            // the player ends up on Infancy only on their first turn
             Tile = Tile.Infancy;
             Color = color;
             Marker = Game.Grid.Add(this);
         }
         public void TakeTurn()
         {
-            if (Dead) return;
-            if(!CanTakeNextTurn)
+            if (Game.Over || Game.CheckForGameEnd()) return;
+            if (Dead)
+            {
+
+            }
+            else if (!CanTakeNextTurn)
             {
                 CanTakeNextTurn = true;
-                return;
             }
-            // allow player to control roll
-            int roll = GetPlayerRoll();
-            Game.DebugText.Text = roll + "";
-            AvailableMoves.Clear();
-            AvailableMoves.UnionWith(Move.MovesByRoll[roll].Where(x => x.OffsetPosIsInbounds(this)));
-            foreach (Move m in AvailableMoves) Game.Grid.HighlightCoords(m.OffsetPos(this));
-            // wait for player to select move...
-            GoTo(GetPlayerMove().OffsetPos(this));
-            // if landed on speculation, allow player to roll again
-            // handled by Speculation type
-            // if landed on tile which moves you, briefly sit there to show how you moved before moving you to the correct tile
+            else
+            {
+                int roll = GetPlayerRoll();
+                Game.DebugText.Text = roll + "";
+                AvailableMoves.Clear();
+                AvailableMoves.UnionWith(Move.MovesByRoll[roll].Where(x => x.OffsetPosIsInbounds(this)));
+                foreach (Move m in AvailableMoves) Game.Grid.HighlightCoords(m.OffsetPos(this));
+                GoTo(GetPlayerMove().OffsetPos(this));
+            }            
             Game.Players.GetNextPlayer().TakeTurn();
         }
         public abstract int GetPlayerRoll();
         public abstract Move GetPlayerMove();
         public void GoTo(Tile t)
         {
+            // brief delay to make movement more visible
             LeaveCurrentTile();
             t.ReceivePlayer(this);
         }

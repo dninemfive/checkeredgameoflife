@@ -30,5 +30,14 @@ namespace CheckeredGameOfLife
             Board = new();
             DebugText = debugText;
         }
+        public static bool CheckForGameEnd()
+        {
+            foreach (Player p in Players) if (p.Points >= Constants.WinPoints)
+                {
+                    Over = true;
+                    return true;
+                }
+            return false;
+        }
     }
 }

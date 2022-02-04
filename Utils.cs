@@ -90,7 +90,18 @@ namespace CheckeredGameOfLife
         public const byte PlayerOpacity = 200;
         public const int GridSize = 8;
         public const int DieSize = 6;
+        public const int WinPoints = 100;
         public static readonly Color HighlightColor = Colors.Yellow.SetOpacity(120);
+        public static readonly List<Color> CpuPlayerColors = new()
+        {
+            Colors.Red,
+            Colors.Blue,
+            Colors.Green,
+            Colors.Purple,
+            Colors.Orange
+        };
+        public static readonly List<Color> TakenCpuColors = new();
+        public static List<Color> NonTakenCpuColors => CpuPlayerColors.Where(x => !TakenCpuColors.Contains(x)).ToList();
     }
     public static class MiscExtensions
     {
