@@ -28,7 +28,7 @@ namespace CheckeredGameOfLife
                 {
                     GameBoard.Add(Game.Board[i, j]);
                 }
-            Player player = new(Colors.Red);
+            Player_CPU_Random player = new(Colors.Red);
             player.TakeTurn();
         }
     }

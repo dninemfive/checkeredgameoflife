@@ -13,4 +13,22 @@ namespace CheckeredGameOfLife
         public override int GetPlayerRoll() => Game.Roll();
         public override Move GetPlayerMove() => AvailableMoves.Random();
     }
+    public class Player_Human : Player
+    {
+        public Player_Human(Color c) : base(c) { }
+        public override int GetPlayerRoll()
+        {
+            while(true)
+            {
+                // have a button which breaks this loop and rolls the teetotum when clicked
+            }
+        }
+        public override Move GetPlayerMove()
+        {
+            while(true)
+            {
+                // add buttons to all available tiles which breaks this loop and moves the player when clicked
+            }
+        }
+    }
 }
