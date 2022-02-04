@@ -91,7 +91,23 @@ namespace CheckeredGameOfLife
         public const int DieSize = 6;
         public const int WinPoints = 100;
         public const byte PlayerOpacity = 200;
-        public static readonly Color HighlightColor = Colors.Yellow.SetOpacity(120);        
+        public static readonly Color HighlightColor = Colors.Yellow.SetOpacity(120);
+        public static readonly List<Color> CpuPlayerColors = new()
+        {
+            Colors.Red.PlayerColor(),
+            Colors.Blue.PlayerColor(),
+            Colors.Green.PlayerColor(),
+            Colors.Purple.PlayerColor(),
+            Colors.Orange.PlayerColor()
+        };
+        public static readonly List<string> CpuPlayerNames = new()
+        {
+            "Locke",
+            "Demosthenes",
+            "Rawls",
+            "Soros",
+            "Havel"
+        };
     }
     public static class MiscExtensions
     {
@@ -129,45 +145,4 @@ namespace CheckeredGameOfLife
             Fill = new SolidColorBrush(color)
         };
 }
-    public static class CpuGenerator
-    {
-        public static readonly List<Color> CpuPlayerColors = new()
-        {
-            Colors.Red,
-            Colors.Blue,
-            Colors.Green,
-            Colors.Purple,
-            Colors.Orange
-        };
-        private static readonly List<Color> TakenCpuColors = new();
-        public static List<Color> NonTakenCpuColors => CpuPlayerColors.Where(x => !TakenCpuColors.Contains(x)).ToList();
-        public static Color RandomNonTakenCpuColor
-        {
-            get
-            {
-                Color rand = NonTakenCpuColors.Random();
-                TakenCpuColors.Add(rand);
-                return rand;
-            }
-        }
-        public static readonly List<string> CpuPlayerNames = new()
-        {
-            "Locke",
-            "Demosthenes",
-            "Rawls",
-            "Soros",
-            "Havel"
-        };
-        private static readonly List<string> TakenCpuNames = new();
-        public static List<string> NonTakenCpuNames => CpuPlayerNames.Where(x => !TakenCpuNames.Contains(x)).ToList();
-        public static string RandomNonTakenCpuName
-        {
-            get
-            {
-                string rand = NonTakenCpuNames.Random();
-                TakenCpuNames.Add(rand);
-                return rand;
-            }
-        }
-    }
 }
