@@ -27,8 +27,9 @@ namespace CheckeredGameOfLife
         public readonly HashSet<Move> AvailableMoves = new();
         public Ellipse Marker { get; private set; }
         public Color Color { get; private set; }
-        public Player(Color color)
+        public Player(string name, Color color)
         {
+            Name = name;
             // todo: set tile to null; have handling for this
             // the player ends up on Infancy only on their first turn
             Tile = Tile.Infancy;

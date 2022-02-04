@@ -29,6 +29,10 @@ namespace CheckeredGameOfLife
             }
             Board = new();
             DebugText = debugText;
+            for(int i = 0; i < 4; i++)
+            {
+
+            }
         }
         public static bool CheckForGameEnd()
         {
