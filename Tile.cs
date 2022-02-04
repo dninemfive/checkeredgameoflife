@@ -130,7 +130,7 @@ namespace CheckeredGameOfLife
         public override void ReceivePlayer(Player p)
         {
             base.ReceivePlayer(p);
-            p.GoTo(TargetTilesByRoll[Game.Roll()]);
+            p.GoTo(TargetTilesByRoll[p.GetPlayerRoll()]);
         }
     }
 }

@@ -103,6 +103,7 @@ namespace CheckeredGameOfLife
         public static bool IsInRange(this int n, int min, int max) => n >= min && n < max;
         public static bool IsInbounds(this int n) => n.IsInRange(0, Constants.GridSize);
         public static bool IsInbounds(this (int x, int y) pos) => pos.x.IsInbounds() && pos.y.IsInbounds();
+        public static T Random<T>(this IEnumerable<T> enumerable) => enumerable.ElementAt(Game.Random.Next(0, enumerable.Count())); 
     }
     public static class UIElements
     {

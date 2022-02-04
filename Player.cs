@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace CheckeredGameOfLife
 {
-    public class Player
+    public abstract class Player
     {
         public string Name;
         public Tile Tile { get; private set; }
@@ -36,15 +36,19 @@ namespace CheckeredGameOfLife
         public void TakeTurn()
         {
             // allow player to control roll
-            int roll = Game.Roll();
+            int roll = GetPlayerRoll();
             Game.DebugText.Text = roll + "";
             AvailableMoves.Clear();
             AvailableMoves.UnionWith(Move.MovesByRoll[roll].Where(x => x.OffsetPosIsInbounds(this)));
             foreach (Move m in AvailableMoves) Game.Grid.HighlightCoords(m.OffsetPos(this));
             // wait for player to select move...
+            GoTo(GetPlayerMove().OffsetPos(this));
             // if landed on speculation, allow player to roll again
+                // handled by Speculation type
             // if landed on tile which moves you, briefly sit there to show how you moved before moving you to the correct tile
         }
+        public abstract int GetPlayerRoll();
+        public abstract Move GetPlayerMove();
         public void GoTo(Tile t)
         {
             LeaveCurrentTile();
